@@ -22,10 +22,10 @@ import shapeless.labelled.FieldType
 
 object Encoders {
 
-  implicit val encodeErrorResponse: Encoder[ErrorResponse] = deriveFor[ErrorResponse].encoder
+  implicit val encodeErrorResponse: Encoder[ErrorResponse] = deriveEncoder[ErrorResponse]
 
   implicit val encodeZooKeeperStorageEnvelope: Encoder[ZooKeeperStorageEnvelope] =
-    deriveFor[ZooKeeperStorageEnvelope].encoder
+    deriveEncoder[ZooKeeperStorageEnvelope]
 
   implicit val exceptionEncoder: Encoder[Exception] = {
     Encoder.instance { e => exceptionErrorResponse(e).asJson }
@@ -38,7 +38,7 @@ object Encoders {
   implicit def encodeIor[A, B](implicit
     encodeA: Encoder[A],
     encodeB: Encoder[B]
-  ): Encoder[Ior[A, B]] = deriveFor[Ior[A, B]].encoder
+  ): Encoder[Ior[A, B]] = deriveEncoder[Ior[A, B]]
 
   /* This method skips all fields of type Throwable when rendering an object as JSON.
    *
@@ -84,7 +84,7 @@ object Encoders {
       }
     }
 
-  implicit val encodeCosmosError: Encoder[CosmosError] = deriveFor[CosmosError].encoder
+  implicit val encodeCosmosError: Encoder[CosmosError] = deriveEncoder[CosmosError]
 
   private[this] def exceptionErrorResponse(t: Throwable): ErrorResponse = t match {
     case Error.NotPresent(item) =>
