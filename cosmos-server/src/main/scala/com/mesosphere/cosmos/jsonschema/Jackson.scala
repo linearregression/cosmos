@@ -3,7 +3,7 @@ package com.mesosphere.cosmos.jsonschema
 import cats.data.Xor
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
-import io.circe.parse.parse
+import io.circe.jackson.parse
 import io.circe.{Decoder, Encoder, Json}
 
 import scala.collection.JavaConverters._

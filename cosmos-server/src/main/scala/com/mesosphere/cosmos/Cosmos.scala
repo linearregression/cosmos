@@ -220,7 +220,7 @@ object Cosmos extends FinchServer {
   }
 
   private[cosmos] def route[Req, Res](base: Endpoint[HNil], handler: EndpointHandler[Req, Res])(
-    requestReader: RequestReader[EndpointContext[Req, Res]]
+    requestReader: Endpoint[EndpointContext[Req, Res]]
   ): Endpoint[Json] = {
     (base ? requestReader).apply((context: EndpointContext[Req, Res]) => handler(context))
   }

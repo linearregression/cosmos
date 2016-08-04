@@ -16,7 +16,7 @@ import com.netaporter.uri.Uri
 import com.twitter.bijection.Conversion.asMethod
 import com.twitter.io.Charsets
 import com.twitter.util.Future
-import io.circe.parse.parse
+import io.circe.jackson.parse
 import io.circe.syntax._
 import io.circe.{Json, JsonObject}
 
@@ -113,7 +113,7 @@ object PackageInstallHandler {
         validConfig(m, config)
     }
 
-    val complete = merged + ("resource", Json.obj("assets" -> assetsJson.getOrElse(Json.obj())))
+    val complete = merged.add("resource", Json.obj("assets" -> assetsJson.getOrElse(Json.obj())))
     Json.fromJsonObject(complete)
   }
 
@@ -152,13 +152,13 @@ object PackageInstallHandler {
     val packageLabels =
       marathonLabels.requiredLabels ++ existingLabels ++ marathonLabels.nonOverridableLabels
 
-    marathonJson.mapObject(_ + ("labels", packageLabels.asJson))
+    marathonJson.mapObject(_.add("labels", packageLabels.asJson))
   }
 
   private final def addAppId(marathonJson: Json, appId: Option[AppId]): Json = {
     import com.mesosphere.cosmos.thirdparty.marathon.circe.Encoders.encodeAppId
     appId match {
-      case Some(id) => marathonJson.mapObject(_ + ("id", id.asJson))
+      case Some(id) => marathonJson.mapObject(_.add("id", id.asJson))
       case _ => marathonJson
     }
   }
@@ -214,7 +214,7 @@ object PackageInstallHandler {
         case _ => fragmentValue
       }
 
-      updatedTarget + (fragmentKey, mergedValue)
+      updatedTarget.add(fragmentKey, mergedValue)
     }
   }
 

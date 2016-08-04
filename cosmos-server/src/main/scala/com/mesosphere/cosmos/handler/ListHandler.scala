@@ -18,7 +18,7 @@ import com.netaporter.uri.Uri
 import com.netaporter.uri.dsl.stringToUri
 import com.twitter.bijection.Conversion.asMethod
 import com.twitter.util.Future
-import io.circe.parse._
+import io.circe.jackson.decode
 
 
 private[cosmos] final class ListHandler(

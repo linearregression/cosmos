@@ -22,7 +22,7 @@ import com.twitter.bijection.Conversion.asMethod
 import com.twitter.finagle.stats.{NullStatsReceiver, Stat, StatsReceiver}
 import com.twitter.io.StreamIO
 import com.twitter.util.Future
-import io.circe.parse._
+import io.circe.jackson.{decode,parse}
 import io.circe.{Decoder, DecodingFailure, Json, JsonObject}
 
 import scala.io.Source
