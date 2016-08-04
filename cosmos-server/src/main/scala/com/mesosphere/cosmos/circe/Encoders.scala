@@ -5,16 +5,16 @@ import com.mesosphere.cosmos._
 import com.mesosphere.cosmos.http.MediaType
 import com.mesosphere.cosmos.model._
 import com.mesosphere.cosmos.thirdparty.marathon.circe.Encoders._
-import com.mesosphere.cosmos.rpc.v1.circe.Encoders._
+//import com.mesosphere.cosmos.rpc.v1.circe.Encoders._
 import com.mesosphere.universe.common.circe.Encoders._
 import com.mesosphere.universe.v2.circe.Encoders._
 import com.mesosphere.universe.v3.circe.Encoders._
 import com.mesosphere.universe.v3.model._
 import com.twitter.finagle.http.Status
 import io.circe.generic.encoding.DerivedObjectEncoder
-import io.circe.generic.semiauto._
 import io.circe.syntax._
-import io.circe.{Encoder, JsonObject}
+import io.circe.generic.semiauto._
+import io.circe.{Encoder, JsonObject, ObjectEncoder}
 import io.finch.Error
 import org.jboss.netty.handler.codec.http.HttpMethod
 import shapeless._
