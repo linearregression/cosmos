@@ -45,7 +45,7 @@ object Decoders {
         case Return(r) => r
         case Throw(ex) =>
           val msg = ex.getMessage.replaceAllLiterally("assertion failed: ", "")
-          Xor.Left(new DecodingFailure(msg, c.history))
+          Xor.Left(DecodingFailure(msg, c.history))
       }
     }
 
