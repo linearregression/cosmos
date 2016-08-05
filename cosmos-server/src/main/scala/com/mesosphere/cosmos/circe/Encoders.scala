@@ -14,6 +14,7 @@ import com.twitter.finagle.http.Status
 import io.circe.generic.encoding.DerivedObjectEncoder
 import io.circe.syntax._
 import io.circe.generic.semiauto._
+import io.circe.DecodingFailure
 import io.circe.{Encoder, JsonObject, ObjectEncoder}
 import io.finch.Error
 import org.jboss.netty.handler.codec.http.HttpMethod
@@ -75,6 +76,7 @@ object Encoders {
    * message, which could contain information that we don't want to surface to users in ordinary
    * error responses. It's better to make a conscious decision to include error data when needed.
    */
+/*
   implicit def dropThrowableFromEncodedObjects[K, H <: Throwable, T <: HList](implicit
     encodeTail: Lazy[DerivedObjectEncoder[T]]
   ): DerivedObjectEncoder[FieldType[K, H] :: T] =
@@ -83,7 +85,35 @@ object Encoders {
         encodeTail.value.encodeObject(a.tail)
       }
     }
+*/
 
+  implicit val encode1: Encoder[PackageNotFound] = deriveEncoder[PackageNotFound]
+  implicit val encode2: Encoder[VersionNotFound] = deriveEncoder[VersionNotFound]
+  implicit val encode3: Encoder[PackageFileMissing] = deriveEncoder[PackageFileMissing]
+  implicit val encode4: Encoder[PackageFileNotJson] = deriveEncoder[PackageFileNotJson]
+  implicit val encode5: Encoder[UnableToParseMarathonAsJson] = deriveEncoder[UnableToParseMarathonAsJson]
+  implicit val encode6: Encoder[PackageFileSchemaMismatch] = deriveEncoder[PackageFileSchemaMismatch]
+  implicit val encode7: Encoder[PackageAlreadyInstalled] = deriveEncoder[PackageAlreadyInstalled]
+  implicit val encode8: Encoder[MarathonBadResponse] = deriveEncoder[MarathonBadResponse]
+  implicit val encode9: Encoder[MarathonGenericError] = deriveEncoder[MarathonGenericError]
+  implicit val encode0: Encoder[MarathonBadGateway] = deriveEncoder[MarathonBadGateway]
+  implicit val encode11: Encoder[IndexNotFound] = deriveEncoder[IndexNotFound]
+  implicit val encode12: Encoder[MarathonAppDeleteError] = deriveEncoder[MarathonAppDeleteError]
+  implicit val encode13: Encoder[MarathonAppNotFound] = deriveEncoder[MarathonAppNotFound]
+  implicit val encode14: Encoder[CirceError] = deriveEncoder[CirceError]
+  implicit val encode15: Encoder[UnsupportedContentType] = deriveEncoder[UnsupportedContentType]
+  implicit val encode16: Encoder[UnsupportedContentEncoding] = deriveEncoder[UnsupportedContentEncoding]
+  implicit val encode17: Encoder[UnsupportedRedirect] = deriveEncoder[UnsupportedRedirect]
+  implicit val encode21: Encoder[GenericHttpError] = deriveEncoder[GenericHttpError]
+  implicit val encode22: Encoder[AmbiguousAppId] = deriveEncoder[AmbiguousAppId]
+  implicit val encode23: Encoder[MultipleFrameworkIds] = deriveEncoder[MultipleFrameworkIds]
+  implicit val encode24: Encoder[PackageNotInstalled] = deriveEncoder[PackageNotInstalled]
+  implicit val encode25: Encoder[JsonSchemaMismatch] = deriveEncoder[JsonSchemaMismatch]
+
+  //implicit val encodeRE: Encoder[RuntimeException] = Encoder.encodeString.contramap(_.toString)
+  implicit val encodeThrowable: Encoder[Throwable] = Encoder.encodeString.contramap(_.getMessage)
+  implicit val encodeDecodingFailure: Encoder[DecodingFailure] = Encoder.encodeString.contramap(_.getMessage)
+//  implicit val encodeCosmosError: Encoder[CosmosError] = Encoder.encodeString.contramap(_.toString)
   implicit val encodeCosmosError: Encoder[CosmosError] = deriveEncoder[CosmosError]
 
   private[this] def exceptionErrorResponse(t: Throwable): ErrorResponse = t match {

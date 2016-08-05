@@ -40,7 +40,6 @@ sealed abstract class CosmosError(causedBy: Throwable = null /*java compatibilit
 
   def getHeaders: Map[String, String] = Map.empty
 }
-
 case class PackageNotFound(packageName: String) extends CosmosError
 
 case class VersionNotFound(
@@ -109,7 +108,7 @@ case class UnsupportedRedirect(supported: List[String], actual: Option[String] =
     )))
   }
 }
-
+//here
 case class GenericHttpError(method: HttpMethod, uri: Uri, override val status: Status) extends CosmosError
 object GenericHttpError {
   def apply(method: String, uri: Uri, status: Int): GenericHttpError = {
@@ -131,7 +130,7 @@ case class JsonSchemaMismatch(errors: Iterable[Json]) extends CosmosError {
 }
 
 case class UninstallNonExistentAppForPackage(packageName: String, appId: AppId) extends CosmosError
-
+//here
 case class ServiceUnavailable(
   serviceName: String,
   causedBy: Throwable
@@ -209,3 +208,4 @@ case class RepositoryNotPresent(nameOrUri: Ior[String, Uri]) extends CosmosError
 
 case class ConversionError(failure: ConversionFailure) extends CosmosError
 case class ServiceMarathonTemplateNotFound(packageName: String, packageVersion: PackageDefinition.Version) extends CosmosError
+
