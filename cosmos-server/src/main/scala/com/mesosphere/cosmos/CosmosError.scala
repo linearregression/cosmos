@@ -108,7 +108,7 @@ case class UnsupportedRedirect(supported: List[String], actual: Option[String] =
     )))
   }
 }
-//here
+
 case class GenericHttpError(method: HttpMethod, uri: Uri, override val status: Status) extends CosmosError
 object GenericHttpError {
   def apply(method: String, uri: Uri, status: Int): GenericHttpError = {
@@ -130,7 +130,7 @@ case class JsonSchemaMismatch(errors: Iterable[Json]) extends CosmosError {
 }
 
 case class UninstallNonExistentAppForPackage(packageName: String, appId: AppId) extends CosmosError
-//here
+
 case class ServiceUnavailable(
   serviceName: String,
   causedBy: Throwable
