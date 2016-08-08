@@ -7,7 +7,7 @@ import com.mesosphere.cosmos.model._
 import com.mesosphere.cosmos.rpc.v1.model.PackageRepository
 import com.mesosphere.cosmos.converter.ConversionFailure
 import com.mesosphere.cosmos.thirdparty.marathon.circe.Encoders._
-//import com.mesosphere.cosmos.rpc.v1.circe.Encoders._
+import com.mesosphere.cosmos.rpc.v1.circe.Encoders._
 import com.mesosphere.universe.common.circe.Encoders._
 import com.mesosphere.universe.v2.circe.Encoders._
 import com.mesosphere.universe.v3.circe.Encoders._
@@ -89,50 +89,7 @@ object Encoders {
     }
 */
 
-  //implicit val encode1: Encoder[PackageNotFound] = deriveEncoder[PackageNotFound]
-  //implicit val encode2: Encoder[VersionNotFound] = deriveEncoder[VersionNotFound]
-  //implicit val encode3: Encoder[PackageFileMissing] = deriveEncoder[PackageFileMissing]
-  //implicit val encode4: Encoder[PackageFileNotJson] = deriveEncoder[PackageFileNotJson]
-  //implicit val encode5: Encoder[UnableToParseMarathonAsJson] = deriveEncoder[UnableToParseMarathonAsJson]
-  //implicit val encode6: Encoder[PackageFileSchemaMismatch] = deriveEncoder[PackageFileSchemaMismatch]
-  //implicit val encode7: Encoder[PackageAlreadyInstalled] = deriveEncoder[PackageAlreadyInstalled]
-  //implicit val encode8: Encoder[MarathonBadResponse] = deriveEncoder[MarathonBadResponse]
-  //implicit val encode9: Encoder[MarathonGenericError] = deriveEncoder[MarathonGenericError]
-  //implicit val encode0: Encoder[MarathonBadGateway] = deriveEncoder[MarathonBadGateway]
-  //implicit val encode11: Encoder[IndexNotFound] = deriveEncoder[IndexNotFound]
-  //implicit val encode12: Encoder[MarathonAppDeleteError] = deriveEncoder[MarathonAppDeleteError]
-  //implicit val encode13: Encoder[MarathonAppNotFound] = deriveEncoder[MarathonAppNotFound]
-  //implicit val encode14: Encoder[CirceError] = deriveEncoder[CirceError]
-  //implicit val encode15: Encoder[UnsupportedContentType] = deriveEncoder[UnsupportedContentType]
-  //implicit val encode16: Encoder[UnsupportedContentEncoding] = deriveEncoder[UnsupportedContentEncoding]
-  //implicit val encode17: Encoder[UnsupportedRedirect] = deriveEncoder[UnsupportedRedirect]
-  //implicit val encode21: Encoder[GenericHttpError] = deriveEncoder[GenericHttpError]
-  //implicit val encode22: Encoder[AmbiguousAppId] = deriveEncoder[AmbiguousAppId]
-  //implicit val encode23: Encoder[MultipleFrameworkIds] = deriveEncoder[MultipleFrameworkIds]
-  //implicit val encode24: Encoder[PackageNotInstalled] = deriveEncoder[PackageNotInstalled]
-  //implicit val encode25: Encoder[JsonSchemaMismatch] = deriveEncoder[JsonSchemaMismatch]
-
-  //implicit val encode31: Encoder[UninstallNonExistentAppForPackage] = deriveEncoder[UninstallNonExistentAppForPackage]
-  //implicit val encode32: Encoder[ServiceUnavailable] = deriveEncoder[ServiceUnavailable]
-  //implicit val encode33: Encoder[Unauthorized] = deriveEncoder[Unauthorized]
-  //implicit val encode34: Encoder[Forbidden] = deriveEncoder[Forbidden]
-  //implicit val encode35: Encoder[IncompleteUninstall] = deriveEncoder[IncompleteUninstall]
-  //implicit val encode36: Encoder[ZooKeeperStorageError] = deriveEncoder[ZooKeeperStorageError]
-  //implicit val encode37: Encoder[ConcurrentAccess] = deriveEncoder[ConcurrentAccess]
-  //implicit val encode38: Encoder[RepoNameOrUriMissing] = deriveEncoder[RepoNameOrUriMissing]
-  //implicit val encode39: Encoder[RepositoryAlreadyPresent] = deriveEncoder[RepositoryAlreadyPresent]
-  //implicit val encode30: Encoder[RepositoryAddIndexOutOfBounds] = deriveEncoder[RepositoryAddIndexOutOfBounds]
-  //
-  //implicit val encode44: Encoder[UnsupportedRepositoryVersion] = deriveEncoder[UnsupportedRepositoryVersion]
-  //implicit val encode45: Encoder[UnsupportedRepositoryUri] = deriveEncoder[UnsupportedRepositoryUri]
-  //implicit val encode48: Encoder[RepositoryNotPresent] = deriveEncoder[RepositoryNotPresent]
-  //implicit val encode40: Encoder[ServiceMarathonTemplateNotFound] = deriveEncoder[ServiceMarathonTemplateNotFound]
-
-  //implicit val encode46: Encoder[RepositoryUriSyntax] = deriveEncoder[RepositoryUriSyntax]
-  //implicit val encode47: Encoder[RepositoryUriConnection] = deriveEncoder[RepositoryUriConnection]
-
-
-  implicit val encodePackageRepository: Encoder[PackageRepository] = deriveEncoder[PackageRepository]
+//  implicit val encodePackageRepository: Encoder[PackageRepository] = deriveEncoder[PackageRepository]
   implicit val encodeConversionError: Encoder[ConversionError] = Encoder.encodeString.contramap(_.failure.getMessage)
   implicit val encodeConversionFailure: Encoder[ConversionFailure] = Encoder.encodeString.contramap(_.getMessage)
   implicit val encodeCirceError: Encoder[io.circe.Error] = Encoder.encodeString.contramap(_.getMessage)

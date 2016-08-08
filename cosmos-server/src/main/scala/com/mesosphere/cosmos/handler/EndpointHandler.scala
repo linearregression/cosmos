@@ -11,7 +11,8 @@ private[cosmos] abstract class EndpointHandler[Request, Response] {
   final def apply(context: EndpointContext[Request, Response]): Future[Output[Json]] = {
     apply(context.requestBody)(context.session).map { response =>
       val encodedResponse = response.asJson(context.responseEncoder.encoder)
-      Ok(encodedResponse).withContentType(Some(context.responseEncoder.mediaType.show))
+      Ok(encodedResponse).toResponse[context.responseEncoder.CT]
+      //withContentType(Some(context.responseEncoder.mediaType.show))
     }
   }
 

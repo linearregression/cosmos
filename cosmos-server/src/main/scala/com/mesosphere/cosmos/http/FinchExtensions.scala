@@ -2,7 +2,7 @@ package com.mesosphere.cosmos.http
 
 import cats.data.Xor
 import com.twitter.util.Future
-import io.finch.{DecodeRequest, Error, Endpoint, ValidationRule}
+import io.finch.{Decode, Error, Endpoint, ValidationRule}
 
 object FinchExtensions {
 
@@ -11,8 +11,8 @@ object FinchExtensions {
       MediaTypeOps.compatible(expected, actual)
     }
 
-  implicit val decodeMediaType: DecodeRequest[MediaType] = {
-    DecodeRequest.instance(s => MediaType.parse(s))
+  implicit val decodeMediaType: Decode[MediaType] = {
+    Decode.instance(s => MediaType.parse(s))
   }
 
   implicit class RequestReaderOps[A](val rr: Endpoint[A]) extends AnyVal {
