@@ -75,4 +75,7 @@ object MediaTypes {
 	type SearchResponseType = Witness.`"application/vnd.dcos.package.search-response+json; charset=utf-8; version=v1;"`.T  
 	type UninstallResponseType = Witness.`"application/vnd.dcos.package.uninstall-response+json; charset=utf-8; version=v1;"`.T  
 	type DescribeRequestType = Witness.`"application/vnd.dcos.package.describe-request+json; charset=utf-8; version=v1;"`.T  
+	type ErrorResponseType = Witness.`"application/vnd.dcos.package.error+json; charset=utf-8; version=v1;"`.T  
+  def fromContentType[CT<:String]:MediaType = ???
 }
+

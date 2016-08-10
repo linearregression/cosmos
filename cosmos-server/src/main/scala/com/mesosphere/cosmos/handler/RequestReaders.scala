@@ -31,7 +31,7 @@ object RequestReaders {
 
   private[this] def baseReader[Res, CT<:String](
     produces: DispatchingMediaTypedEncoder[Res, CT]
-  ): Endpoint[(RequestSession, MediaTypedEncoder[Res, CT])] = {
+  ): Endpoint[(RequestSession, MediaTypedEncoder[Res])] = {
     for {
       responseEncoder <- header("Accept")
         .as[MediaType]

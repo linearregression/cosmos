@@ -100,19 +100,20 @@ private[cosmos] final class Cosmos(
       .handle {
         case ce: CosmosError =>
           stats.counter(s"definedError/${sanitiseClassName(ce.getClass)}").incr()
-          val output = Output.failure(ce, ce.status).withContentType(Some(MediaTypes.ErrorResponse.show))
+          //TODO: should the other portion be a failure as well?
+          val output = Ok(Output.failure(ce, ce.status).toResponse[MediaTypes.ErrorResponseType]())
           ce.getHeaders.foldLeft(output) { case (out, kv) => out.withHeader(kv) }
         case fe: io.finch.Error =>
           stats.counter(s"finchError/${sanitiseClassName(fe.getClass)}").incr()
-          Output.failure(fe, Status.BadRequest).withContentType(Some(MediaTypes.ErrorResponse.show))
+          Ok(Output.failure(fe, Status.BadRequest).toResponse[MediaTypes.ErrorResponseType]())
         case e: Exception if !e.isInstanceOf[io.finch.Error] =>
           stats.counter(s"unhandledException/${sanitiseClassName(e.getClass)}").incr()
           logger.warn("Unhandled exception: ", e)
-          Output.failure(e, Status.InternalServerError).withContentType(Some(MediaTypes.ErrorResponse.show))
+          Ok(Output.failure(e, Status.InternalServerError).toResponse[MediaTypes.ErrorResponseType]())
         case t: Throwable if !t.isInstanceOf[io.finch.Error] =>
           stats.counter(s"unhandledThrowable/${sanitiseClassName(t.getClass)}").incr()
           logger.warn("Unhandled throwable: ", t)
-          Output.failure(new Exception(t), Status.InternalServerError).withContentType(Some(MediaTypes.ErrorResponse.show))
+          Ok(Output.failure(new Exception(t), Status.InternalServerError).toResponse[MediaTypes.ErrorResponseType]())
       }
       .toService
   }

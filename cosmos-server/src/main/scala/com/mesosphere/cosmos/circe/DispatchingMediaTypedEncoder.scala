@@ -1,32 +1,30 @@
 package com.mesosphere.cosmos.circe
 
 import com.mesosphere.cosmos.http.MediaType
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.http.MediaTypeOps.mediaTypeToMediaTypeOps
 import io.circe.Encoder
 
 /** Allows an [[io.circe.Encoder]] to be selected by a [[com.mesosphere.cosmos.http.MediaType]]. */
-final class DispatchingMediaTypedEncoder[A] private(
-  private[this] val encoders: Seq[MediaTypedEncoder[A]]
+final class DispatchingMediaTypedEncoder[A,CT<:String] private(
+  private[this] val encoder: MediaTypedEncoder[A]
 ) {
 
   def apply(mediaType: MediaType): Option[MediaTypedEncoder[A]] = {
-    encoders.find(_.mediaType.isCompatibleWith(mediaType))
+    MediaTypes.fromContentType[CT].isCompatibleWith(mediaType)
   }
-
-  def mediaTypes: Seq[MediaType] = encoders.map(_.mediaType)
-
 }
 
 object DispatchingMediaTypedEncoder {
 
-  def apply[A](encoders: Seq[MediaTypedEncoder[A]]): DispatchingMediaTypedEncoder[A] = {
-    new DispatchingMediaTypedEncoder(encoders)
+  def apply[A,CT<:String](encoder: MediaTypedEncoder[A]): DispatchingMediaTypedEncoder[A,CT] = {
+    new DispatchingMediaTypedEncoder(encoder)
   }
 
-  def apply[A](mediaType: MediaType)(implicit
+  def apply[A,CT<:String](mediaType: MediaType)(implicit
     encoder: Encoder[A]
-  ): DispatchingMediaTypedEncoder[A] = {
-    DispatchingMediaTypedEncoder(Seq(MediaTypedEncoder(encoder, mediaType)))
+  ): DispatchingMediaTypedEncoder[A,CT] = {
+    DispatchingMediaTypedEncoder(MediaTypedEncoder(encoder))
   }
 
 }
