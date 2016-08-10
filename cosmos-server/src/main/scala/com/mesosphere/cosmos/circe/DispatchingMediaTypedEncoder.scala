@@ -21,7 +21,7 @@ object DispatchingMediaTypedEncoder {
     new DispatchingMediaTypedEncoder(encoder)
   }
 
-  def apply[A,CT<:String](mediaType: MediaType)(implicit
+  def apply[A,CT<:String]()(implicit
     encoder: Encoder[A]
   ): DispatchingMediaTypedEncoder[A,CT] = {
     DispatchingMediaTypedEncoder(MediaTypedEncoder(encoder))
