@@ -8,18 +8,18 @@ import io.finch._
 
 object RequestReaders {
 
-  def noBody[Res](implicit
-    produces: DispatchingMediaTypedEncoder[Res]
-  ): Endpoint[EndpointContext[Unit, Res]] = {
+  def noBody[Res, CT<:String](implicit
+    produces: DispatchingMediaTypedEncoder[Res, CT]
+  ): Endpoint[EndpointContext[Unit, Res, CT]] = {
     baseReader(produces).map { case (session, responseEncoder) =>
       EndpointContext((), session, responseEncoder)
     }
   }
 
-  def standard[Req, Res](implicit
+  def standard[Req, Res, CT<:String](implicit
     accepts: MediaTypedDecoder[Req],
-    produces: DispatchingMediaTypedEncoder[Res]
-  ): Endpoint[EndpointContext[Req, Res]] = {
+    produces: DispatchingMediaTypedEncoder[Res, CT]
+  ): Endpoint[EndpointContext[Req, Res, CT]] = {
     for {
       (reqSession, responseEncoder) <- baseReader(produces)
       _ <- header("Content-Type").as[MediaType].should(beTheExpectedType(accepts.mediaType))
@@ -29,9 +29,9 @@ object RequestReaders {
     }
   }
 
-  private[this] def baseReader[Res](
-    produces: DispatchingMediaTypedEncoder[Res]
-  ): Endpoint[(RequestSession, MediaTypedEncoder[Res])] = {
+  private[this] def baseReader[Res, CT<:String](
+    produces: DispatchingMediaTypedEncoder[Res, CT]
+  ): Endpoint[(RequestSession, MediaTypedEncoder[Res, CT])] = {
     for {
       responseEncoder <- header("Accept")
         .as[MediaType]

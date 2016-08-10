@@ -64,9 +64,7 @@ object MediaTypes {
 	type V1ListResponseType = Witness.`"application/vnd.dcos.package.list-response+json; charset=utf-8; version=v1;"`.T  
 
 	type ListVersionsResponseType = Witness.`"application/vnd.dcos.package.list-versions-response+json; charset=utf-8; version=v1;"`.T  
-	type V1DescribeResponseType = Witness.`"application/vnd.dcos.package.describe-response+json; charset=utf-8; version=v1;"`.T  
 
-	type V1InstallResponseType = Witness.`"application/vnd.dcos.package.install-response+json; charset=utf-8; version=v1;"`.T  
 	type RenderResponseType = Witness.`"application/vnd.dcos.package.render-response+json; charset=utf-8; version=v1;"`.T  
 
 	type PackageRepositoryAddResponseType = Witness.`"application/vnd.dcos.package.repository.add-response+json; charset=utf-8; version=v1;"`.T  
@@ -76,4 +74,5 @@ object MediaTypes {
 
 	type SearchResponseType = Witness.`"application/vnd.dcos.package.search-response+json; charset=utf-8; version=v1;"`.T  
 	type UninstallResponseType = Witness.`"application/vnd.dcos.package.uninstall-response+json; charset=utf-8; version=v1;"`.T  
+	type DescribeRequestType = Witness.`"application/vnd.dcos.package.describe-request+json; charset=utf-8; version=v1;"`.T  
 }

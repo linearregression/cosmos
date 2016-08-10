@@ -2,6 +2,7 @@ package com.mesosphere.cosmos.handler
 
 import com.mesosphere.cosmos.converter.Universe._
 import com.mesosphere.cosmos.http.RequestSession
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.repository.PackageCollection
 import com.mesosphere.cosmos.AdminRouter
 import com.mesosphere.cosmos.AmbiguousAppId
@@ -21,7 +22,7 @@ import com.twitter.util.Future
 private[cosmos] final class UninstallHandler(
   adminRouter: AdminRouter,
   packageCache: PackageCollection
-) extends EndpointHandler[rpc.v1.model.UninstallRequest, rpc.v1.model.UninstallResponse] {
+) extends EndpointHandler[rpc.v1.model.UninstallRequest, rpc.v1.model.UninstallResponse, MediaTypes.UninstallResponseType] {
 
   private type FwIds = List[String]
 

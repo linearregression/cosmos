@@ -11,7 +11,7 @@ import com.twitter.util.Try
 
 object MediaTypedEncoders {
 
-  implicit val packageDescribeResponseEncoderV2: DispatchingMediaTypedEncoder[internal.model.PackageDefinition, MediaTypes.V2DescribeResponseType] = {
+  implicit val packageDescribeResponseEncoderV2: DispatchingMediaTypedEncoder[internal.model.PackageDefinition] = {
     DispatchingMediaTypedEncoder(
       MediaTypedEncoder(
         encoder = rpc.v2.circe.Encoders.encodeV2DescribeResponse.contramap { (pkgDefinition: internal.model.PackageDefinition) =>
@@ -20,18 +20,17 @@ object MediaTypedEncoders {
       )
     )
   }
-  implicit val packageDescribeResponseEncoderV1: DispatchingMediaTypedEncoder[internal.model.PackageDefinition, MediaTypes.V1DescribeResponseType] = {
+  implicit val packageDescribeResponseEncoderV1: DispatchingMediaTypedEncoder[internal.model.PackageDefinition] = {
     DispatchingMediaTypedEncoder(
       MediaTypedEncoder(
         encoder = rpc.v1.circe.Encoders.encodeDescribeResponse.contramap[internal.model.PackageDefinition] { pkg =>
           pkg.as[Try[rpc.v1.model.DescribeResponse]].get()
-        },
-        mediaType = MediaTypes.V1DescribeResponse
+        }
       )
     )
   }
 
-  implicit val packageInstallResponseEncoderV2: DispatchingMediaTypedEncoder[rpc.v2.model.InstallResponse,MediaTypes.V2InstallResponseType] = {
+  implicit val packageInstallResponseEncoderV2: DispatchingMediaTypedEncoder[rpc.v2.model.InstallResponse] = {
     DispatchingMediaTypedEncoder(
       MediaTypedEncoder(
         encoder = rpc.v2.circe.Encoders.encodeV2InstallResponse
@@ -39,7 +38,7 @@ object MediaTypedEncoders {
     )
   }
 
-  implicit val packageInstallResponseEncoderV1: DispatchingMediaTypedEncoder[rpc.v2.model.InstallResponse,MediaTypes.V1InstallResponseType] = {
+  implicit val packageInstallResponseEncoderV1: DispatchingMediaTypedEncoder[rpc.v2.model.InstallResponse] = {
     DispatchingMediaTypedEncoder(
       MediaTypedEncoder(
         encoder = rpc.v1.circe.Encoders.encodeInstallResponse.contramap { (x: rpc.v2.model.InstallResponse) =>

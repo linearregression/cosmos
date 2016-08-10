@@ -4,9 +4,7 @@ import com.mesosphere.cosmos.http.MediaType
 import io.circe.Encoder
 
 /** Associates a media type with an [[io.circe.Encoder]] instance. */
-final class MediaTypedEncoder[A,CT <: String] private(val encoder: Encoder[A]) {
-  type ContentType = CT
-}
+final class MediaTypedEncoder[A] private(val encoder: Encoder[A])
 
 object MediaTypedEncoder {
 

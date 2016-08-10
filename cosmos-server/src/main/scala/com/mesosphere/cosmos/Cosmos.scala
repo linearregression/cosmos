@@ -21,16 +21,16 @@ import io.github.benwhitehead.finch.FinchServer
 import shapeless.HNil
 
 private[cosmos] final class Cosmos(
-  uninstallHandler: EndpointHandler[rpc.v1.model.UninstallRequest, rpc.v1.model.UninstallResponse],
-  packageInstallHandler: EndpointHandler[rpc.v1.model.InstallRequest, rpc.v2.model.InstallResponse],
-  packageRenderHandler: EndpointHandler[rpc.v1.model.RenderRequest, rpc.v1.model.RenderResponse],
-  packageSearchHandler: EndpointHandler[rpc.v1.model.SearchRequest, rpc.v1.model.SearchResponse],
-  packageDescribeHandler: EndpointHandler[rpc.v1.model.DescribeRequest, internal.model.PackageDefinition],
-  packageListVersionsHandler: EndpointHandler[rpc.v1.model.ListVersionsRequest, rpc.v1.model.ListVersionsResponse],
-  listHandler: EndpointHandler[rpc.v1.model.ListRequest, rpc.v1.model.ListResponse],
-  listRepositoryHandler: EndpointHandler[rpc.v1.model.PackageRepositoryListRequest, rpc.v1.model.PackageRepositoryListResponse],
-  addRepositoryHandler: EndpointHandler[rpc.v1.model.PackageRepositoryAddRequest, rpc.v1.model.PackageRepositoryAddResponse],
-  deleteRepositoryHandler: EndpointHandler[rpc.v1.model.PackageRepositoryDeleteRequest, rpc.v1.model.PackageRepositoryDeleteResponse],
+  uninstallHandler: EndpointHandler[rpc.v1.model.UninstallRequest, rpc.v1.model.UninstallResponse, MediaTypes.UninstallResponseType],
+  packageInstallHandler: EndpointHandler[rpc.v1.model.InstallRequest, rpc.v2.model.InstallResponse,MediaTypes.V1InstallResponseType],
+  packageRenderHandler: EndpointHandler[rpc.v1.model.RenderRequest, rpc.v1.model.RenderResponse, MediaTypes.RenderResponseType],
+  packageSearchHandler: EndpointHandler[rpc.v1.model.SearchRequest, rpc.v1.model.SearchResponse, MediaTypes.SearchResponseType],
+  packageDescribeHandler: EndpointHandler[rpc.v1.model.DescribeRequest, internal.model.PackageDefinition, MediaTypes.DescribeRequestType],
+  packageListVersionsHandler: EndpointHandler[rpc.v1.model.ListVersionsRequest, rpc.v1.model.ListVersionsResponse, MediaTypes.ListVersionsResponseType],
+  listHandler: EndpointHandler[rpc.v1.model.ListRequest, rpc.v1.model.ListResponse,MediaTypes.V1ListResponseType],
+  listRepositoryHandler: EndpointHandler[rpc.v1.model.PackageRepositoryListRequest, rpc.v1.model.PackageRepositoryListResponse,MediaTypes.PackageRepositoryListResponseType],
+  addRepositoryHandler: EndpointHandler[rpc.v1.model.PackageRepositoryAddRequest, rpc.v1.model.PackageRepositoryAddResponse,MediaTypes.PackageRepositoryAddResponseType],
+  deleteRepositoryHandler: EndpointHandler[rpc.v1.model.PackageRepositoryDeleteRequest, rpc.v1.model.PackageRepositoryDeleteResponse,MediaTypes.PackageRepositoryDeleteResponseType],
   capabilitiesHandler: CapabilitiesHandler
 )(implicit statsReceiver: StatsReceiver = NullStatsReceiver) {
 
@@ -38,47 +38,47 @@ private[cosmos] final class Cosmos(
 
   lazy val logger = org.slf4j.LoggerFactory.getLogger(classOf[Cosmos])
 
-  val packageInstall: Endpoint[Json] = {
+  val packageInstall: Endpoint[Response] = {
     route(post("package" / "install"), packageInstallHandler)(RequestReaders.standard)
   }
 
-  val packageUninstall: Endpoint[Json] = {
+  val packageUninstall: Endpoint[Response] = {
     route(post("package" / "uninstall"), uninstallHandler)(RequestReaders.standard)
   }
 
-  val packageDescribe: Endpoint[Json] = {
+  val packageDescribe: Endpoint[Response] = {
     route(post("package" / "describe"), packageDescribeHandler)(RequestReaders.standard)
   }
 
-  val packageRender: Endpoint[Json] = {
+  val packageRender: Endpoint[Response] = {
     route(post("package" / "render"), packageRenderHandler)(RequestReaders.standard)
   }
 
-  val packageListVersions: Endpoint[Json] = {
+  val packageListVersions: Endpoint[Response] = {
     route(post("package" / "list-versions"), packageListVersionsHandler)(RequestReaders.standard)
   }
 
-  val packageSearch: Endpoint[Json] = {
+  val packageSearch: Endpoint[Response] = {
     route(post("package" / "search"), packageSearchHandler)(RequestReaders.standard)
   }
 
-  val packageList: Endpoint[Json] = {
+  val packageList: Endpoint[Response] = {
     route(post("package" / "list"), listHandler)(RequestReaders.standard)
   }
 
-  val capabilities: Endpoint[Json] = {
+  val capabilities: Endpoint[Response] = {
     route(get("capabilities"), capabilitiesHandler)(RequestReaders.noBody)
   }
 
-  val packageListSources: Endpoint[Json] = {
+  val packageListSources: Endpoint[Response] = {
     route(post("package" / "repository" / "list"), listRepositoryHandler)(RequestReaders.standard)
   }
 
-  val packageAddSource: Endpoint[Json] = {
+  val packageAddSource: Endpoint[Response] = {
     route(post("package" / "repository" / "add"), addRepositoryHandler)(RequestReaders.standard)
   }
 
-  val packageDeleteSource: Endpoint[Json] = {
+  val packageDeleteSource: Endpoint[Response] = {
     route(post("package" / "repository" / "delete"), deleteRepositoryHandler)(RequestReaders.standard)
   }
 
@@ -219,9 +219,9 @@ object Cosmos extends FinchServer {
     )(statsReceiver)
   }
 
-  private[cosmos] def route[Req, Res](base: Endpoint[HNil], handler: EndpointHandler[Req, Res])(
-    requestReader: Endpoint[EndpointContext[Req, Res]]
-  ): Endpoint[Json] = {
-    (base ? requestReader).apply((context: EndpointContext[Req, Res]) => handler(context))
+  private[cosmos] def route[Req, Res,CT<:String](base: Endpoint[HNil], handler: EndpointHandler[Req, Res, CT])(
+    requestReader: Endpoint[EndpointContext[Req, Res, CT]]
+  ): Endpoint[Response] = {
+    (base ? requestReader).apply((context: EndpointContext[Req, Res, CT]) => handler(context))
   }
 }
