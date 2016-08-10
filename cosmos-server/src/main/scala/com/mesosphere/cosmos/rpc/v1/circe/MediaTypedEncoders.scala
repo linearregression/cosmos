@@ -7,37 +7,37 @@ import com.mesosphere.cosmos.rpc.v1.model._
 
 object MediaTypedEncoders {
 
-  implicit val capabilitiesEncoder: DispatchingMediaTypedEncoder[CapabilitiesResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.CapabilitiesResponse)
+  implicit val capabilitiesEncoder: DispatchingMediaTypedEncoder[CapabilitiesResponse, MediaTypes.CapabilitiesResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageListV1Encoder: DispatchingMediaTypedEncoder[ListResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.V1ListResponse)
+  implicit val packageListV1Encoder: DispatchingMediaTypedEncoder[ListResponse, MediaTypes.V1ListResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageListVersionsEncoder: DispatchingMediaTypedEncoder[ListVersionsResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.ListVersionsResponse)
+  implicit val packageListVersionsEncoder: DispatchingMediaTypedEncoder[ListVersionsResponse, MediaTypes.ListVersionsResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageDescribeV1Encoder: DispatchingMediaTypedEncoder[DescribeResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.V1DescribeResponse)
+  implicit val packageDescribeV1Encoder: DispatchingMediaTypedEncoder[DescribeResponse,MediaTypes.V1DescribeResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageInstallV1Encoder: DispatchingMediaTypedEncoder[InstallResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.V1InstallResponse)
+  implicit val packageInstallV1Encoder: DispatchingMediaTypedEncoder[InstallResponse,MediaTypes.V1InstallResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageRenderEncoder: DispatchingMediaTypedEncoder[RenderResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.RenderResponse)
+  implicit val packageRenderEncoder: DispatchingMediaTypedEncoder[RenderResponse,MediaTypes.RenderResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageRepositoryAddEncoder: DispatchingMediaTypedEncoder[PackageRepositoryAddResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.PackageRepositoryAddResponse)
+  implicit val packageRepositoryAddEncoder: DispatchingMediaTypedEncoder[PackageRepositoryAddResponse,MediaTypes.PackageRepositoryAddResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageRepositoryDeleteEncoder: DispatchingMediaTypedEncoder[PackageRepositoryDeleteResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.PackageRepositoryDeleteResponse)
+  implicit val packageRepositoryDeleteEncoder: DispatchingMediaTypedEncoder[PackageRepositoryDeleteResponse,MediaTypes.PackageRepositoryDeleteResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageRepositoryListEncoder: DispatchingMediaTypedEncoder[PackageRepositoryListResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.PackageRepositoryListResponse)
+  implicit val packageRepositoryListEncoder: DispatchingMediaTypedEncoder[PackageRepositoryListResponse,MediaTypes.PackageRepositoryListResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageSearchEncoder: DispatchingMediaTypedEncoder[SearchResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.SearchResponse)
+  implicit val packageSearchEncoder: DispatchingMediaTypedEncoder[SearchResponse,MediaTypes.SearchResponseType] =
+    DispatchingMediaTypedEncoder()
 
-  implicit val packageUninstallEncoder: DispatchingMediaTypedEncoder[UninstallResponse] =
-    DispatchingMediaTypedEncoder(MediaTypes.UninstallResponse)
+  implicit val packageUninstallEncoder: DispatchingMediaTypedEncoder[UninstallResponse,MediaTypes.UninstallResponseType] =
+    DispatchingMediaTypedEncoder()
 
 }
