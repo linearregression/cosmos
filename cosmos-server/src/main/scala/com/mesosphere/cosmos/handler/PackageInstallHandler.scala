@@ -7,6 +7,7 @@ import com.github.mustachejava.DefaultMustacheFactory
 import com.mesosphere.cosmos._
 import com.mesosphere.cosmos.converter.Universe._
 import com.mesosphere.cosmos.http.RequestSession
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.jsonschema.JsonSchemaValidation
 import com.mesosphere.cosmos.repository.PackageCollection
 import com.mesosphere.cosmos.thirdparty.marathon.model.AppId
@@ -25,7 +26,7 @@ import scala.collection.JavaConverters._
 private[cosmos] final class PackageInstallHandler(
   packageCollection: PackageCollection,
   packageRunner: PackageRunner
-) extends EndpointHandler[rpc.v1.model.InstallRequest, rpc.v2.model.InstallResponse] {
+) extends EndpointHandler[rpc.v1.model.InstallRequest, rpc.v2.model.InstallResponse, MediaTypes.V2InstallResponseType] {
 
   import PackageInstallHandler._
 
