@@ -5,11 +5,11 @@ import com.mesosphere.cosmos.http.MediaTypeOps.mediaTypeToMediaTypeOps
 import io.circe.Encoder
 
 /** Allows an [[io.circe.Encoder]] to be selected by a [[com.mesosphere.cosmos.http.MediaType]]. */
-final class DispatchingMediaTypedEncoder[A] private(
-  private[this] val encoders: Seq[MediaTypedEncoder[A]]
+final class DispatchingMediaTypedEncoder[A,CT<:String] private(
+  private[this] val encoders: Seq[MediaTypedEncoder[A,CT]]
 ) {
 
-  def apply(mediaType: MediaType): Option[MediaTypedEncoder[A]] = {
+  def apply(mediaType: MediaType): Option[MediaTypedEncoder[A,CT]] = {
     encoders.find(_.mediaType.isCompatibleWith(mediaType))
   }
 
@@ -19,7 +19,7 @@ final class DispatchingMediaTypedEncoder[A] private(
 
 object DispatchingMediaTypedEncoder {
 
-  def apply[A](encoders: Seq[MediaTypedEncoder[A]]): DispatchingMediaTypedEncoder[A] = {
+  def apply[A,CT<:String](encoders: Seq[MediaTypedEncoder[A,CT]]): DispatchingMediaTypedEncoder[A] = {
     new DispatchingMediaTypedEncoder(encoders)
   }
 

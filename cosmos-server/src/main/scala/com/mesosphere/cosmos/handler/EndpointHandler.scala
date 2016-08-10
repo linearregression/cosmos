@@ -8,11 +8,11 @@ import io.finch._
 
 private[cosmos] abstract class EndpointHandler[Request, Response] {
 
-  final def apply(context: EndpointContext[Request, Response]): Future[Output[Json]] = {
+  final def apply(context: EndpointContext[Request, Response]): Future[Output[Response]] = {
     apply(context.requestBody)(context.session).map { response =>
       val encodedResponse = response.asJson(context.responseEncoder.encoder)
-      Ok(encodedResponse).toResponse[context.responseEncoder.CT]
-      //withContentType(Some(context.responseEncoder.mediaType.show))
+      //TODO: Ok(Ok(..)) should be fixed by finch 0.11 release
+      Ok(Ok(encodedResponse).toResponse[context.responseEncoder.ContentType]())
     }
   }
 

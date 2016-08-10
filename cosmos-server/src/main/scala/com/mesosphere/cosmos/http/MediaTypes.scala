@@ -1,4 +1,5 @@
 package com.mesosphere.cosmos.http
+import shapeless.Witness
 
 object MediaTypes {
   private[this] def vnd(kind: String, version: Int = 1): MediaType =
@@ -52,5 +53,11 @@ object MediaTypes {
   val V2InstallResponse = vnd("install-response", 2)
   val V1ListResponse = vnd("list-response", 1)
   val V2ListResponse = vnd("list-response", 2)
+
+	type V2DescribeResponseType = Witness.`"application/vnd.dcos.package.describe-response+json; charset=utf-8; version=v2;"`.T  
+	type V1DescribeResponseType = Witness.`"application/vnd.dcos.package.describe-response+json; charset=utf-8; version=v1;"`.T  
+
+	type V1InstallResponseType = Witness.`"application/vnd.dcos.package.install-response+json; charset=utf-8; version=v1;"`.T  
+	type V2InstallResponseType = Witness.`"application/vnd.dcos.package.install-response+json; charset=utf-8; version=v2;"`.T  
 
 }

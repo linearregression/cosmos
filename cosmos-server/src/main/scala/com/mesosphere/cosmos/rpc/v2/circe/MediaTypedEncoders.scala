@@ -11,36 +11,41 @@ import com.twitter.util.Try
 
 object MediaTypedEncoders {
 
-  implicit val packageDescribeResponseEncoder: DispatchingMediaTypedEncoder[internal.model.PackageDefinition] = {
-    DispatchingMediaTypedEncoder(Seq(
+  implicit val packageDescribeResponseEncoderV2: DispatchingMediaTypedEncoder[internal.model.PackageDefinition, MediaTypes.V2DescribeResponseType] = {
+    DispatchingMediaTypedEncoder(
       MediaTypedEncoder(
         encoder = rpc.v2.circe.Encoders.encodeV2DescribeResponse.contramap { (pkgDefinition: internal.model.PackageDefinition) =>
           converter.Universe.internalPackageDefinitionToV2DescribeResponse(pkgDefinition)
-        },
-        mediaType = MediaTypes.V2DescribeResponse
-      ),
+        }
+      )
+    )
+  }
+  implicit val packageDescribeResponseEncoderV1: DispatchingMediaTypedEncoder[internal.model.PackageDefinition, MediaTypes.V1DescribeResponseType] = {
+    DispatchingMediaTypedEncoder(
       MediaTypedEncoder(
         encoder = rpc.v1.circe.Encoders.encodeDescribeResponse.contramap[internal.model.PackageDefinition] { pkg =>
           pkg.as[Try[rpc.v1.model.DescribeResponse]].get()
         },
         mediaType = MediaTypes.V1DescribeResponse
       )
-    ))
+    )
   }
 
-  implicit val packageInstallResponseEncoder: DispatchingMediaTypedEncoder[rpc.v2.model.InstallResponse] = {
-    DispatchingMediaTypedEncoder(Seq(
+  implicit val packageInstallResponseEncoderV2: DispatchingMediaTypedEncoder[rpc.v2.model.InstallResponseMediaTypes.V2InstallResponseType] = {
+    DispatchingMediaTypedEncoder(
       MediaTypedEncoder(
-        encoder = rpc.v2.circe.Encoders.encodeV2InstallResponse,
-        mediaType = MediaTypes.V2InstallResponse
-      ),
+        encoder = rpc.v2.circe.Encoders.encodeV2InstallResponse
+      )
+    )
+  }
+
+  implicit val packageInstallResponseEncoderV1: DispatchingMediaTypedEncoder[rpc.v2.model.InstallResponseMediaTypes.V1InstallResponseType] = {
+    DispatchingMediaTypedEncoder(
       MediaTypedEncoder(
         encoder = rpc.v1.circe.Encoders.encodeInstallResponse.contramap { (x: rpc.v2.model.InstallResponse) =>
           x.as[Try[rpc.v1.model.InstallResponse]].get()
-        },
-        mediaType = MediaTypes.V1InstallResponse
+        }
       )
-    ))
+    )
   }
-
 }
