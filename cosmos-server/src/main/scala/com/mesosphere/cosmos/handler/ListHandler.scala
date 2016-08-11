@@ -25,7 +25,7 @@ import io.circe.jackson.decode
 private[cosmos] final class ListHandler(
   adminRouter: AdminRouter,
   repositories: (Uri) => Future[Option[CosmosRepository]]
-) extends EndpointHandler[ListRequest, ListResponse, MediaTypes.V1ListResponse] {
+) extends EndpointHandler[ListRequest, ListResponse, MediaTypes.V1ListResponseType] {
 
   private case class App(id: AppId,
                          pkgName: String,

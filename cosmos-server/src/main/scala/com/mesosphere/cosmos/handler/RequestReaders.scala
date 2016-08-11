@@ -3,6 +3,7 @@ package com.mesosphere.cosmos.handler
 import cats.syntax.option._
 import com.mesosphere.cosmos.circe.{DispatchingMediaTypedEncoder, MediaTypedDecoder, MediaTypedEncoder}
 import com.mesosphere.cosmos.http.FinchExtensions._
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.http.{Authorization, MediaType, RequestSession}
 import io.finch._
 
@@ -37,7 +38,7 @@ object RequestReaders {
         .as[MediaType]
         .convert { accept =>
           produces(accept)
-            .toRightXor(s"should match one of: ${produces.mediaTypes.map(_.show).mkString(", ")}")
+            .toRightXor(s"should match: ${MediaTypes.fromContentType[CT].show}")
         }
       auth <- headerOption("Authorization")
     } yield {

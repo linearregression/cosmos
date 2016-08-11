@@ -11,7 +11,11 @@ final class DispatchingMediaTypedEncoder[A,CT<:String] private(
 ) {
 
   def apply(mediaType: MediaType): Option[MediaTypedEncoder[A]] = {
-    MediaTypes.fromContentType[CT].isCompatibleWith(mediaType)
+    if(MediaTypes.fromContentType[CT].isCompatibleWith(mediaType)) {
+      Some(encoder)
+    } else {
+      None
+    }
   }
 }
 
