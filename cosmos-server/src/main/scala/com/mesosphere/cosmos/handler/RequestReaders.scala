@@ -10,7 +10,7 @@ object RequestReaders {
 
   def noBody[Res, CT<:String](implicit
     produces: DispatchingMediaTypedEncoder[Res, CT]
-  ): Endpoint[EndpointContext[Unit, Res, CT]] = {
+  ): Endpoint[EndpointContext[Unit, Res]] = {
     baseReader(produces).map { case (session, responseEncoder) =>
       EndpointContext((), session, responseEncoder)
     }
@@ -19,7 +19,7 @@ object RequestReaders {
   def standard[Req, Res, CT<:String](implicit
     accepts: MediaTypedDecoder[Req],
     produces: DispatchingMediaTypedEncoder[Res, CT]
-  ): Endpoint[EndpointContext[Req, Res, CT]] = {
+  ): Endpoint[EndpointContext[Req, Res]] = {
     for {
       (reqSession, responseEncoder) <- baseReader(produces)
       _ <- header("Content-Type").as[MediaType].should(beTheExpectedType(accepts.mediaType))

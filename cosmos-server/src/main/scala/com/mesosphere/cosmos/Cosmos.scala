@@ -16,13 +16,14 @@ import com.twitter.finagle.stats.{NullStatsReceiver, StatsReceiver}
 import com.twitter.util.Try
 import io.circe.Json
 import io.finch._
+import io.finch.circe._
 import io.finch.circe.dropNullKeys._
 import io.github.benwhitehead.finch.FinchServer
 import shapeless.HNil
 
 private[cosmos] final class Cosmos(
   uninstallHandler: EndpointHandler[rpc.v1.model.UninstallRequest, rpc.v1.model.UninstallResponse, MediaTypes.UninstallResponseType],
-  packageInstallHandler: EndpointHandler[rpc.v1.model.InstallRequest, rpc.v2.model.InstallResponse,MediaTypes.V1InstallResponseType],
+  packageInstallHandler: EndpointHandler[rpc.v1.model.InstallRequest, rpc.v2.model.InstallResponse,MediaTypes.V2InstallResponseType],
   packageRenderHandler: EndpointHandler[rpc.v1.model.RenderRequest, rpc.v1.model.RenderResponse, MediaTypes.RenderResponseType],
   packageSearchHandler: EndpointHandler[rpc.v1.model.SearchRequest, rpc.v1.model.SearchResponse, MediaTypes.SearchResponseType],
   packageDescribeHandler: EndpointHandler[rpc.v1.model.DescribeRequest, internal.model.PackageDefinition, MediaTypes.DescribeRequestType],
@@ -221,8 +222,8 @@ object Cosmos extends FinchServer {
   }
 
   private[cosmos] def route[Req, Res,CT<:String](base: Endpoint[HNil], handler: EndpointHandler[Req, Res, CT])(
-    requestReader: Endpoint[EndpointContext[Req, Res, CT]]
+    requestReader: Endpoint[EndpointContext[Req, Res]]
   ): Endpoint[Response] = {
-    (base ? requestReader).apply((context: EndpointContext[Req, Res, CT]) => handler(context))
+    (base ? requestReader).apply((context: EndpointContext[Req, Res]) => handler(context))
   }
 }
