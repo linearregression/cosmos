@@ -7,6 +7,7 @@ import cats.data.Xor
 import com.mesosphere.cosmos.{AdminRouter, CirceError}
 import com.mesosphere.cosmos.converter.Label._
 import com.mesosphere.cosmos.http.RequestSession
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.label
 import com.mesosphere.cosmos.label.v1.circe.Decoders._
 import com.mesosphere.cosmos.repository.CosmosRepository
@@ -24,7 +25,7 @@ import io.circe.jackson.decode
 private[cosmos] final class ListHandler(
   adminRouter: AdminRouter,
   repositories: (Uri) => Future[Option[CosmosRepository]]
-) extends EndpointHandler[ListRequest, ListResponse] {
+) extends EndpointHandler[ListRequest, ListResponse, MediaTypes.V1ListResponse] {
 
   private case class App(id: AppId,
                          pkgName: String,

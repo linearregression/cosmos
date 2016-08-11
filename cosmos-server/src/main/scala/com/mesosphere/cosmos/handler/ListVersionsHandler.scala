@@ -3,6 +3,7 @@ package com.mesosphere.cosmos.handler
 import com.mesosphere.cosmos.converter.Common._
 import com.mesosphere.cosmos.converter.Universe._
 import com.mesosphere.cosmos.http.RequestSession
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.repository.PackageCollection
 import com.mesosphere.cosmos.rpc
 import com.mesosphere.universe
@@ -11,7 +12,7 @@ import com.twitter.util.Future
 
 final class ListVersionsHandler(
   packageCollection: PackageCollection
-) extends EndpointHandler[rpc.v1.model.ListVersionsRequest, rpc.v1.model.ListVersionsResponse] {
+) extends EndpointHandler[rpc.v1.model.ListVersionsRequest, rpc.v1.model.ListVersionsResponse,MediaTypes.ListVersionsResponseType] {
 
   override def apply(request: rpc.v1.model.ListVersionsRequest)(implicit
     session: RequestSession

@@ -3,13 +3,14 @@ package com.mesosphere.cosmos.handler
 import cats.data.Ior
 import com.mesosphere.cosmos.RepoNameOrUriMissing
 import com.mesosphere.cosmos.http.RequestSession
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.repository.PackageSourcesStorage
 import com.mesosphere.cosmos.rpc.v1.model.{PackageRepositoryDeleteRequest, PackageRepositoryDeleteResponse}
 import com.twitter.util.Future
 
 private[cosmos] final class PackageRepositoryDeleteHandler(
   sourcesStorage: PackageSourcesStorage
-) extends EndpointHandler[PackageRepositoryDeleteRequest, PackageRepositoryDeleteResponse] {
+) extends EndpointHandler[PackageRepositoryDeleteRequest, PackageRepositoryDeleteResponse, MediaTypes.PackageRepositoryDeleteResponseType] {
 
   import PackageRepositoryDeleteHandler._
 

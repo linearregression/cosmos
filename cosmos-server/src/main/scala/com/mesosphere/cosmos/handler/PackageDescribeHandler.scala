@@ -2,6 +2,7 @@ package com.mesosphere.cosmos.handler
 
 import com.mesosphere.cosmos.converter.Universe._
 import com.mesosphere.cosmos.http.RequestSession
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.repository.PackageCollection
 import com.mesosphere.cosmos.internal
 import com.mesosphere.cosmos.rpc
@@ -11,7 +12,7 @@ import com.twitter.util.Future
 
 private[cosmos] final class PackageDescribeHandler(
   packageCollection: PackageCollection
-) extends EndpointHandler[rpc.v1.model.DescribeRequest, internal.model.PackageDefinition] {
+) extends EndpointHandler[rpc.v1.model.DescribeRequest, internal.model.PackageDefinition, MediaTypes.DescribeRequestType] {
 
   override def apply(request: rpc.v1.model.DescribeRequest)(implicit
     session: RequestSession

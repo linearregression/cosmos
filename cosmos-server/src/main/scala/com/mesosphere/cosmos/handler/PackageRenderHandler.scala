@@ -3,6 +3,7 @@ package com.mesosphere.cosmos.handler
 import com.mesosphere.cosmos.ServiceMarathonTemplateNotFound
 import com.mesosphere.cosmos.converter.Universe._
 import com.mesosphere.cosmos.http.RequestSession
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.repository.PackageCollection
 import com.mesosphere.cosmos.rpc.v1.model.{RenderRequest, RenderResponse}
 import com.mesosphere.universe
@@ -11,7 +12,7 @@ import com.twitter.util.Future
 
 private[cosmos] final class PackageRenderHandler(
   packageCache: PackageCollection
-) extends EndpointHandler[RenderRequest, RenderResponse] {
+) extends EndpointHandler[RenderRequest, RenderResponse, MediaTypes.RenderResponseType] {
 
   import PackageInstallHandler._
 

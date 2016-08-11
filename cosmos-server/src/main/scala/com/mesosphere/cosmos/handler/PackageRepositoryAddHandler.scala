@@ -2,13 +2,14 @@ package com.mesosphere.cosmos.handler
 
 import com.mesosphere.cosmos.UnsupportedRepositoryUri
 import com.mesosphere.cosmos.http.RequestSession
+import com.mesosphere.cosmos.http.MediaTypes
 import com.mesosphere.cosmos.repository.PackageSourcesStorage
 import com.mesosphere.cosmos.rpc.v1.model.{PackageRepository, PackageRepositoryAddRequest, PackageRepositoryAddResponse}
 import com.twitter.util.Future
 
 private[cosmos] final class PackageRepositoryAddHandler(
   sourcesStorage: PackageSourcesStorage
-) extends EndpointHandler[PackageRepositoryAddRequest, PackageRepositoryAddResponse] {
+) extends EndpointHandler[PackageRepositoryAddRequest, PackageRepositoryAddResponse, MediaTypes.PackageRepositoryAddResponseType] {
 
   override def apply(request: PackageRepositoryAddRequest)(implicit
     session: RequestSession
