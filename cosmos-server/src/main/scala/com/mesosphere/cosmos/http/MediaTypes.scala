@@ -76,6 +76,7 @@ object MediaTypes {
 	type UninstallResponseType = Witness.`"application/vnd.dcos.package.uninstall-response+json; charset=utf-8; version=v1;"`.T  
 	type DescribeRequestType = Witness.`"application/vnd.dcos.package.describe-request+json; charset=utf-8; version=v1;"`.T  
 	type ErrorResponseType = Witness.`"application/vnd.dcos.package.error+json; charset=utf-8; version=v1;"`.T  
+  //TODO: implement a conversion from ContentType to MediaType
   def fromContentType[CT<:String]:MediaType = ???
 }
 
