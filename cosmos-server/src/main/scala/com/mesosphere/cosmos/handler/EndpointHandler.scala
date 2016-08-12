@@ -17,6 +17,6 @@ private[cosmos] abstract class EndpointHandler[Request, Res, CT<:String] {
     }
   }
 
-  def apply(request: Request)(implicit session: RequestSession): Future[Response]
+  def apply(request: Request)(implicit session: RequestSession): Future[Res]
 
 }
