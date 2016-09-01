@@ -26,6 +26,7 @@ object CosmosBuild extends Build {
     val scalaCheck = "1.12.5"
     val twitterUtilCore = "6.30.0"
     val zookeeper = "3.4.6"
+    val aws = "1.11.30"
   }
 
   object Deps {
@@ -107,6 +108,10 @@ object CosmosBuild extends Build {
 
     val twitterUtilCore = Seq(
       "com.twitter" %% "util-core" % V.twitterUtilCore
+    )
+
+    val aws = Seq(
+      "com.amazonaws" % "aws-java-sdk" % V.aws
     )
 
   }
@@ -264,6 +269,7 @@ object CosmosBuild extends Build {
           ++ Deps.mustache
           ++ Deps.scalaTest
           ++ Deps.scalaUri
+          ++ Deps.aws
     )
     .dependsOn(json % "compile;test->test")
 
